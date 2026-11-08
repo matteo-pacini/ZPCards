@@ -44,16 +44,6 @@ Or add this repository as a custom repository of type *Dashboard*.
 
 One file holds every card. Each card appears in the dashboard's card picker once the file is loaded.
 
-### Moving from HASSBudgetCard or HASSPrepping
-
-These cards used to live in [HASSBudgetCard](https://github.com/matteo-pacini/HASSBudgetCard) and [HASSPrepping](https://github.com/matteo-pacini/HASSPrepping). The card types, options and stored data are unchanged, so dashboards and to-do lists keep working. To move:
-
-1. In HACS, remove *Budget Sankey Card* and *Prepping Cards*.
-2. Under **Settings → Dashboards → Resources**, delete any resource that still ends in `budget-sankey-card.js` or `prepping-cards.js`.
-3. Install ZPCards as above, then reload the browser.
-
-Do step 2 before step 3. A card that is loaded twice fails to define itself, and the dashboard shows an error.
-
 ## Budget Sankey Card
 
 Draws your budget as a sankey: total, groups, line items. Figures live in the card's config, not in entities. Entries can start and end on set dates, and the card lets you step through upcoming changes.
@@ -295,7 +285,7 @@ Each food or bottle size is one to-do item. The item's name is what the card sho
 {"litres": 2, "count": 16, "batches": [{"n": 1, "exp": "2028-06", "count": 16}]}
 ```
 
-`exp` is the best-before date: a month (`2027-03`, good to the end of March) or a day (`2027-09-15`), or `null` for none. `count` is the batches' total, kept for anything that reads only that. An item from HASSPrepping 1.0, with a `count` and no `batches`, shows as one batch with no date.
+`exp` is the best-before date: a month (`2027-03`, good to the end of March) or a day (`2027-09-15`), or `null` for none. `count` is the batches' total, kept for anything that reads only that. An item in the older format, with a `count` and no `batches`, shows as one batch with no date.
 
 One more item per card, *Food stockpile settings* or *Water stockpile settings*, holds its target: `{"target_days": 30}`. Items whose description is none of these are left alone and not shown, so both cards can share one list.
 
