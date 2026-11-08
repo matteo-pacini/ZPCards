@@ -11,7 +11,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
 
-const SOURCES = ["budget-sankey-card.js", "prepping-cards.js"];
+const SOURCES = ["budget-sankey-card.js", "prepping-cards.js", "meds-streak-card.js"];
 const root = path.join(__dirname, "..");
 const out = path.join(root, "zp-cards.js");
 

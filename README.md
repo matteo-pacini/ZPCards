@@ -7,6 +7,7 @@ Home Assistant dashboard cards, installed together as one HACS download:
 | [Budget Sankey Card](#budget-sankey-card) | `custom:budget-sankey-card` | Draws a budget as a sankey: total, groups, line items. Entries can start and end on set dates. |
 | [Food stockpile](#prepping-cards) | `custom:food-stockpile-card` | Counts a household's food stock in days, in batches by best-before date. |
 | [Water stockpile](#prepping-cards) | `custom:water-stockpile-card` | The same for bottled water. |
+| [Meds streak](#meds-streak-card) | `custom:meds-streak-card` | Shows one medicine's last month as a calendar, with the current streak. |
 
 <p>
   <img src="images/budget/dark.png" alt="Budget Sankey Card on a dark theme" width="49%">
@@ -20,15 +21,17 @@ flowchart LR
   yaml["Card YAML<br/>or visual editor"] --> budget["Budget Sankey Card"]
   todo[("To-do list<br/>todo.food_stockpile<br/>todo.water_stockpile")] <--> prep["Food and water<br/>stockpile cards"]
   people(["Everyone in the house"]) --> prep
+  taken["Taken today sensor<br/>live state + daily statistics"] --> meds["Meds Streak Card"]
 ```
 
-The budget card keeps its figures in its own config and reads no entities. The stockpile cards keep their stock in to-do lists, so every user and device sees the same numbers.
+The budget card keeps its figures in its own config and reads no entities. The stockpile cards keep their stock in to-do lists, so every user and device sees the same numbers. The meds card reads a sensor and its long-term statistics, and stores nothing itself.
 
 ## Contents
 
 - [Install](#install)
 - [Budget Sankey Card](#budget-sankey-card)
 - [Prepping Cards](#prepping-cards)
+- [Meds Streak Card](#meds-streak-card)
 - [Languages](#languages)
 - [Development](#development)
 
@@ -291,6 +294,97 @@ One more item per card, *Food stockpile settings* or *Water stockpile settings*,
 
 Items can be renamed or reordered in the to-do list itself; the card shows them in the list's order. Edit a description there only if it stays valid JSON; otherwise the card stops showing that item.
 
+## Meds Streak Card
+
+One card per medicine. It shows the last 30 days as a calendar that starts on Monday. Days in a row join into one bar, and today has a ring. The header shows the current streak and the best streak in the window, and a bar at the bottom shows how many of the last 30 days were taken.
+
+![Two meds cards on Home Assistant's default dark theme](images/meds/dark.png)
+
+| Default light theme | A custom theme |
+| --- | --- |
+| ![Meds cards on the default light theme](images/meds/light.png) | ![Meds cards on a dark custom theme with its own palette](images/meds/nocturne.png) |
+
+Colours come from your theme's own variables: green for taken, orange for a dose still due, the primary colour for today's ring. A theme that sets `--green-color`, `--orange-color` and `--primary-color` restyles the card with no card config.
+
+<p>
+  <img src="images/meds/mobile.png" alt="Two meds cards on a phone" width="250">
+</p>
+
+### What it needs
+
+Each medicine needs a **taken today** sensor. It is `1` from the moment the dose is logged until midnight, then `0`. It also needs a `state_class`, so the recorder keeps its long-term statistics. The calendar reads past days from those statistics, which are never purged.
+
+One way to set this up is to log each dose in a Date and time helper, and derive the sensor from it with a template:
+
+```yaml
+input_datetime:
+  meds_vitamin_d:
+    name: Vitamin D taken
+    has_date: true
+    has_time: true
+
+template:
+  - sensor:
+      - name: Vitamin D taken today
+        unique_id: meds_vitamin_d_taken_today
+        state_class: measurement
+        state: >
+          {{ 1 if states('input_datetime.meds_vitamin_d')[:10] == now().date() | string else 0 }}
+```
+
+To log a dose, set the helper to now. A button or an automation can call:
+
+```yaml
+action: input_datetime.set_datetime
+target:
+  entity_id: input_datetime.meds_vitamin_d
+data:
+  timestamp: "{{ now().timestamp() }}"
+```
+
+### Usage
+
+```yaml
+type: custom:meds-streak-card
+entity: sensor.vitamin_d_taken_today
+logged: input_datetime.meds_vitamin_d
+when: evening
+```
+
+The visual editor covers every option except `strings`. Its labels are in English.
+
+### Options
+
+| Option | Default | Description |
+| --- | --- | --- |
+| `entity` | required | The taken today sensor: above 0 once today's dose is logged |
+| `name` | the sensor's name | Card title |
+| `logged` | | An `input_datetime` with the time the dose was taken; the card shows it once today's dose is logged |
+| `when` | | When the dose is due, such as `morning`; shown while today's dose is not logged |
+| `icon` | `mdi:pill` | Icon beside the name |
+| `days` | `30` | Days in the window: the calendar, the best streak and the count |
+| `locale` | Home Assistant's | BCP 47 tag, such as `de-DE`, for the card's text, dates and numbers |
+| `strings` | translated | Overrides for the card's own text, see below |
+
+### How days are counted
+
+- **Today** comes from the sensor's live state, so the card changes as soon as a dose is logged.
+- **Past days** come from the sensor's daily statistics. A day counts as taken when the sensor's average over the day is above 0. The card does not use the day's maximum. The sensor drops to 0 at midnight, but the recorder still sees the 1 it had at the start of the next day. By maximum, the day after every dose would count as taken too. As a result, a dose logged after about 23:58 does not count for that day.
+- **Days** start at midnight in Home Assistant's time zone, the same zone the recorder uses for its daily statistics.
+- **The streak** is the run of taken days up to today. While today's dose is not logged yet, the run up to yesterday counts, so the streak only breaks after a whole day without a dose. The card works it out from the statistics each time it draws, and follows it back up to a year. Nothing has to run at midnight.
+
+### Strings
+
+```yaml
+strings:
+  not_yet_when: "Due {when}"
+  streak:
+    one: "day in a row"
+    other: "days in a row"
+```
+
+Keys: `taken_today`, `taken_at`, `not_yet`, `not_yet_when`, `streak`, `best`, `of_last`, `state_taken`, `state_missed`, `state_pending`, `state_loading`, `summary`, `not_found`. Keep the `{time}`, `{when}`, `{n}`, `{days}`, `{name}`, `{count}`, `{streak}` and `{entity}` placeholders. `streak` and `of_last` change with the number: give one string for every number, or a form per [plural category](https://cldr.unicode.org/index/cldr-spec/plural-rules) with `other` as the fallback.
+
 ## Languages
 
 <p>
@@ -303,6 +397,9 @@ Items can be renamed or reordered in the to-do list itself; the card shows them 
   <img src="images/prepping/lang-de.png" alt="Food card in German for two men and two women" width="250">
   <img src="images/prepping/lang-pt-BR.png" alt="Food card in Brazilian Portuguese for two women" width="250">
 </p>
+<p>
+  <img src="images/meds/lang-de.png" alt="Meds cards in German" width="500">
+</p>
 
 Every card's own text is available in English, Dutch, French, German, Italian, Polish, Portuguese, Brazilian Portuguese, Simplified Chinese, Spanish and Swedish. It needs no setup: a card uses its `locale` if set, otherwise your Home Assistant language.
 
@@ -310,14 +407,15 @@ A regional locale uses its regional text if there is one, then its language, so 
 
 - **Budget:** currency is separate from the locale. Set `currency`, or it follows Home Assistant.
 - **Stockpile:** the names of your foods and bottles are shown as you typed them. Batch labels use the language's word for a batch, so B2 is C2 in German (*Charge*) and L2 in Italian (*lotto*); the number is the same in every language.
+- **Meds:** weekday and month names follow the locale. The calendar always starts on Monday.
 
-To change individual strings, set `strings` on the card. The keys are listed under each card: [budget](#strings), [stockpile](#strings-1).
+To change individual strings, set `strings` on the card. The keys are listed under each card: [budget](#strings), [stockpile](#strings-1), [meds](#strings-2).
 
 ## Development
 
 | Path | Contents |
 | --- | --- |
-| `src/` | One script per card family; edit these |
+| `src/` | One script per card or family of cards; edit these |
 | `zp-cards.js` | The file HACS installs, built from `src/` |
 | `test/` | Tests, run with Node's built-in runner |
 | `images/` | Screenshots used here |

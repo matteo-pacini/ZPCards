@@ -28,10 +28,11 @@ test("zp-cards.js defines every card and its editor", async () => {
     "budget-sankey-card",
     "budget-sankey-card-editor",
     "food-stockpile-card",
+    "meds-streak-card",
     "water-stockpile-card",
   ]);
   assert.deepEqual(
     Array.from(ctx.window.customCards, (c) => c.type).sort(),
-    ["budget-sankey-card", "food-stockpile-card", "water-stockpile-card"],
+    ["budget-sankey-card", "food-stockpile-card", "meds-streak-card", "water-stockpile-card"],
   );
 });
