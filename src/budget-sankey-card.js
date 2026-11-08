@@ -1164,5 +1164,5 @@ window.customCards.push({
   name: "Budget Sankey",
   description: "Three-level sankey of a hand-maintained budget",
   preview: true,
-  documentationURL: "https://github.com/matteo-pacini/HASSBudgetCard",
+  documentationURL: "https://github.com/matteo-pacini/ZPCards#budget-sankey-card",
 });

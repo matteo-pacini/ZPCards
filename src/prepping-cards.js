@@ -1156,6 +1156,6 @@ for (const kind of Object.values(KINDS)) {
     name: kind.name,
     description: kind.description,
     preview: false,
-    documentationURL: "https://github.com/matteo-pacini/HASSPrepping",
+    documentationURL: "https://github.com/matteo-pacini/ZPCards#prepping-cards",
   });
 }

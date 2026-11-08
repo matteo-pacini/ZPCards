@@ -46,7 +46,7 @@ vm.runInContext(
   `,
   ctx
 );
-vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "prepping-cards.js"), "utf8"), ctx);
+vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "src", "prepping-cards.js"), "utf8"), ctx);
 
 // A to-do item as todo/item/subscribe reports it.
 const item = (summary, description, uid = summary) => ({

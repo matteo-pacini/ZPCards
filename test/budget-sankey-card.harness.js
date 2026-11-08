@@ -50,7 +50,7 @@ vm.runInContext(
   `,
   ctx
 );
-vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "budget-sankey-card.js"), "utf8"), ctx);
+vm.runInContext(fs.readFileSync(path.join(__dirname, "..", "src", "budget-sankey-card.js"), "utf8"), ctx);
 
 module.exports = {
   ctx,
