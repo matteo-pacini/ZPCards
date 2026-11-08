@@ -204,12 +204,13 @@ test("esc escapes markup in names", () => {
   assert.equal(esc(`Tom's <b>"beans"</b> & co`), "Tom&#39;s &lt;b&gt;&quot;beans&quot;&lt;/b&gt; &amp; co");
 });
 
-test("both cards register, each with its own list", () => {
+test("every card registers, each with its own list", () => {
   const { defined } = ctx.customElements;
-  assert.deepEqual(Object.keys(defined), ["food-stockpile-card", "water-stockpile-card"]);
+  assert.deepEqual(Object.keys(defined), ["food-stockpile-card", "water-stockpile-card", "cat-stockpile-card"]);
   assert.deepEqual(plain(defined["food-stockpile-card"].getStubConfig()), { entity: "todo.food_stockpile", men: 1, women: 1 });
   assert.deepEqual(plain(defined["water-stockpile-card"].getStubConfig()), { entity: "todo.water_stockpile", men: 1, women: 1 });
-  assert.deepEqual(plain(ctx.window.customCards.map((x) => x.type)), ["food-stockpile-card", "water-stockpile-card"]);
+  assert.deepEqual(plain(defined["cat-stockpile-card"].getStubConfig()), { entity: "todo.cat_stockpile" });
+  assert.deepEqual(plain(ctx.window.customCards.map((x) => x.type)), ["food-stockpile-card", "water-stockpile-card", "cat-stockpile-card"]);
 });
 
 test("the editor labels state each card's daily need per person", () => {

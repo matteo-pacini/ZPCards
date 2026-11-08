@@ -36,15 +36,15 @@ for (const lang of LANGUAGES) {
 test("every full language translates every key whose English isn't universal", () => {
   // Keys whose English text is also right in these languages, so they may be left out.
   const shared = {
-    de: ["name", "portion"],
-    es: ["days_short"],
-    fr: ["portion"],
-    it: ["kcal_per_100g"],
-    nl: ["days_short", "kcal_per_100g"],
-    pl: [],
-    pt: ["days_short"],
-    sv: ["days_short", "portion", "kcal_per_100g"],
-    "zh-Hans": [],
+    de: ["name", "portion", "meal_amount"],
+    es: ["days_short", "meal_amount"],
+    fr: ["portion", "meal_amount"],
+    it: ["kcal_per_100g", "meal_amount"],
+    nl: ["days_short", "kcal_per_100g", "meal_amount"],
+    pl: ["meal_amount"],
+    pt: ["days_short", "meal_amount"],
+    sv: ["days_short", "portion", "kcal_per_100g", "meal_amount"],
+    "zh-Hans": ["meal_amount"],
   };
   for (const [lang, same] of Object.entries(shared)) {
     const missing = Object.keys(STRINGS.en).filter((k) => !(k in STRINGS[lang]));

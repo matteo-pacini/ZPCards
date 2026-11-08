@@ -7,6 +7,7 @@ Home Assistant dashboard cards, installed together as one HACS download:
 | [Budget Sankey Card](#budget-sankey-card) | `custom:budget-sankey-card` | Draws a budget as a sankey: total, groups, line items. Entries can start and end on set dates. |
 | [Food stockpile](#prepping-cards) | `custom:food-stockpile-card` | Counts a household's food stock in days, in batches by best-before date. |
 | [Water stockpile](#prepping-cards) | `custom:water-stockpile-card` | The same for bottled water. |
+| [Cat stockpile](#cats) | `custom:cat-stockpile-card` | Counts the cats' wet and dry food in days, from each cat's meals. |
 | [Meds streak](#meds-streak-card) | `custom:meds-streak-card` | Shows one medicine's last month as a calendar, with the current streak. |
 
 <p>
@@ -179,7 +180,7 @@ Keys: `budget`, `in`, `combined_income`, `out`, `total`, `left`, `save_month`, `
 
 ## Prepping Cards
 
-Two cards for a household stockpile: one for food, one for water. Each shows how many days the stock lasts for the people you set, against a target number of days. Each item is kept in numbered batches by best-before date, so you can see what to eat first.
+Three cards for a household stockpile: food, water and cat food. Each shows how many days the stock lasts for the people or cats you set, against a target number of days. Each item is kept in numbered batches by best-before date, so you can see what to eat first.
 
 | Light theme | Water, target met |
 | --- | --- |
@@ -201,6 +202,7 @@ Each card keeps its stock in a to-do list. By default:
 | --- | --- | --- |
 | Food stockpile | Food stockpile | `todo.food_stockpile` |
 | Water stockpile | Water stockpile | `todo.water_stockpile` |
+| Cat stockpile | Cat stockpile | `todo.cat_stockpile` |
 
 If a card's list doesn't exist yet, the card offers to create it as a Local To-do list. Only an admin can; anyone else is told which list to ask for.
 
@@ -210,7 +212,7 @@ To create a list by hand: **Settings → Devices & services → Add integration 
 
 ### Usage
 
-Add the cards from the dashboard editor and fill them in there, or write the YAML yourself. The visual editor has the list, the title, the number of men and women side by side, and the locale. Its labels are in English.
+Add the cards from the dashboard editor and fill them in there, or write the YAML yourself. The visual editor has the list, the title, the number of men and women side by side (food and water only), and the locale. Its labels are in English.
 
 ```yaml
 type: custom:food-stockpile-card
@@ -226,9 +228,14 @@ men: 1
 women: 1
 ```
 
+```yaml
+type: custom:cat-stockpile-card
+entity: todo.cat_stockpile
+```
+
 Everything else happens on the card:
 
-- **− and +** beside the big number change the target number of days. It starts at 30 for food and 7 for water. The number turns green once the stock covers the target.
+- **− and +** beside the big number change the target number of days. It starts at 30 for food and cats, and 7 for water. The number turns green once the stock covers the target.
 - **Add food** or **Add bottles** opens a form. Food asks for the portion in grams and the calories per 100 g from the label; bottles ask for the litres each holds. A new item goes at the bottom of the list. The pencil on a row edits or removes it.
 - **Batches** sit under each row, soonest to expire first: *B2 · 6 · Mar 2027* is batch 2, six of them, best before the end of March 2027. A batch turns amber within 30 days of its date and red once past it. The number beside the pencil is the row's total.
 - **+ B3** adds a batch: its best-before month and how many. A batch with the same month gets them instead.
@@ -245,9 +252,9 @@ A batch keeps its number until it's gone, so you can write it on the tins. Numbe
 | Option | Default | Description |
 | --- | --- | --- |
 | `entity` | required | The to-do list that holds the stock |
-| `title` | `Food` or `Water` | Card title |
-| `men` | `1` | Adult men to feed, a whole number |
-| `women` | `1` | Adult women to feed, a whole number |
+| `title` | `Food`, `Water` or `Cats` | Card title |
+| `men` | `1` | Adult men to feed, a whole number; food and water only |
+| `women` | `1` | Adult women to feed, a whole number; food and water only |
 | `locale` | Home Assistant's | BCP 47 tag, such as `de-DE`, for the card's text and numbers |
 | `strings` | translated | Overrides for the card's own text, see [Languages](#languages) |
 
@@ -262,6 +269,21 @@ Set `men` and `women` to the adults in the household. The card adds up what they
 
 For example, two men and one woman need 7,000 kcal and 12 L a day, so a 30-day food target is 210,000 kcal. Setting both to `0` makes the card ask for at least one person.
 
+### Cats
+
+The cat card counts wet and dry food separately, because a cat on both runs out when either one does. Its cats are set on the card, not in YAML, so anyone in the house can add a cat or change a meal.
+
+<img src="images/prepping/cats.png" alt="Cat stockpile card: 15 of 30 days, wet food runs out first, three cats and their meals, wet and dry stock" width="420">
+
+- **Add cat** asks for a name and a diet: wet, dry, or wet and dry. For each type it eats, give the meals a day and the grams a meal. The pencil beside a cat edits or removes it.
+- **Add food** asks whether the item is wet or dry, and its grams each: the weight of one pouch, tin or bag.
+- **Days** are worked out per type: the stock of that type divided by what all the cats eat of it a day. The big number is the shorter of the two, and the type that runs out first is marked. A type no cat eats never limits the days; its stock is still listed.
+- **Meals**: the header shows how many meals the cats eat a day, and each row shows how many meals it holds, at the cats' average meal of that type.
+
+For example, Miso eats 2 wet meals of 85 g and 1 dry meal of 25 g, Tofu eats 2 dry meals of 30 g, and Pepper eats 3 wet meals of 50 g. Together they eat 320 g wet and 85 g dry a day, in 8 meals.
+
+<img src="images/prepping/cat-edit.png" alt="Editing a cat: name, diet, and meals a day and grams a meal for wet and dry" width="420">
+
 ### Strings
 
 ```yaml
@@ -273,7 +295,7 @@ strings:
     other: "{n} adult men"
 ```
 
-Keys: `food`, `water`, `of_days`, `days_short`, `per_day`, `each`, `men`, `women`, `target`, `day_less`, `day_more`, `edit`, `batch`, `new_batch`, `edit_batch`, `best_before`, `quantity`, `no_date`, `add_food`, `add_bottles`, `name`, `portion`, `kcal_per_100g`, `litres_each`, `add`, `save`, `cancel`, `remove`, `empty_food`, `empty_water`, `loading`, `nobody`, `missing`, `create`, `ask_admin`, `save_error`, `create_error`. Keep the `{n}`, `{amount}`, `{name}`, `{batch}`, `{entity}` and `{error}` placeholders. `of_days`, `men` and `women` change with the number: give one string for every number, or a form per [plural category](https://cldr.unicode.org/index/cldr-spec/plural-rules) (`one`, `few`, `many`, `other`, …) with `other` as the fallback.
+Keys: `food`, `water`, `of_days`, `days_short`, `per_day`, `each`, `men`, `women`, `target`, `day_less`, `day_more`, `edit`, `batch`, `new_batch`, `edit_batch`, `best_before`, `quantity`, `no_date`, `add_food`, `add_bottles`, `name`, `portion`, `kcal_per_100g`, `litres_each`, `add`, `save`, `cancel`, `remove`, `empty_food`, `empty_water`, `loading`, `nobody`, `missing`, `create`, `ask_admin`, `save_error`, `create_error`, and for the cat card `cats`, `cat_count`, `meals_a_day`, `meals`, `meal_amount`, `wet`, `dry`, `wet_dry`, `wet_food`, `dry_food`, `runs_out_first`, `nobody_eats`, `food_type`, `grams_each`, `grams_a_meal`, `meals_per_day`, `diet`, `add_cat`, `edit_cat`, `empty_cat_food`, `no_cats`. Keep the `{n}`, `{amount}`, `{name}`, `{batch}`, `{entity}` and `{error}` placeholders. `of_days`, `men`, `women`, `cat_count`, `meals_a_day` and `meals` change with the number: give one string for every number, or a form per [plural category](https://cldr.unicode.org/index/cldr-spec/plural-rules) (`one`, `few`, `many`, `other`, …) with `other` as the fallback.
 
 ### How the data is stored
 
@@ -288,9 +310,19 @@ Each food or bottle size is one to-do item. The item's name is what the card sho
 {"litres": 2, "count": 16, "batches": [{"n": 1, "exp": "2028-06", "count": 16}]}
 ```
 
+```json
+{"type": "wet", "grams": 85, "count": 36, "batches": [{"n": 1, "exp": "2026-12", "count": 12}, {"n": 2, "exp": "2027-08", "count": 24}]}
+```
+
 `exp` is the best-before date: a month (`2027-03`, good to the end of March) or a day (`2027-09-15`), or `null` for none. `count` is the batches' total, kept for anything that reads only that. An item in the older format, with a `count` and no `batches`, shows as one batch with no date.
 
-One more item per card, *Food stockpile settings* or *Water stockpile settings*, holds its target: `{"target_days": 30}`. Items whose description is none of these are left alone and not shown, so both cards can share one list.
+One more item per card, *Food stockpile settings*, *Water stockpile settings* or *Cat stockpile settings*, holds its target: `{"target_days": 30}`. The cat card's also holds its cats, each with only the types it eats:
+
+```json
+{"target_days": 30, "cats": [{"name": "Miso", "wet": {"meals": 2, "g": 85}, "dry": {"meals": 1, "g": 25}}, {"name": "Tofu", "dry": {"meals": 2, "g": 30}}]}
+```
+
+Items whose description is none of these are left alone and not shown, so the cards can share one list.
 
 Items can be renamed or reordered in the to-do list itself; the card shows them in the list's order. Edit a description there only if it stays valid JSON; otherwise the card stops showing that item.
 

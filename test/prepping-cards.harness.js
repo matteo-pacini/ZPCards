@@ -61,7 +61,7 @@ module.exports = {
   // The script's top-level declarations, which are not properties of the
   // context's global object and so are fetched by name.
   cards: vm.runInContext(
-    "({ KINDS, STRINGS, translate, fill, plural, readItems, readBatches, itemJSON, household, checkConfig, editorForm, listName, fmtNumber, fmtDays, fmtKcal, fmtLitres, esc, expiryDate, daysLeft, expiryState, fmtExpiry, byExpiry, totalCount, nextBatch, addBatch, setBatch })",
+    "({ KINDS, TYPES, readField, readCats, catJSON, catNeeds, catDays, fmtGrams, STRINGS, translate, fill, plural, readItems, readBatches, itemJSON, household, checkConfig, editorForm, listName, fmtNumber, fmtDays, fmtKcal, fmtLitres, esc, expiryDate, daysLeft, expiryState, fmtExpiry, byExpiry, totalCount, nextBatch, addBatch, setBatch })",
     ctx
   ),
 

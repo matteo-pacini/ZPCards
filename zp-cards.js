@@ -1174,14 +1174,15 @@ window.customCards.push({
 
 // src/prepping-cards.js
 {
-// Prepping cards: food stockpile and water stockpile.
+// Prepping cards: food, water and cat food stockpiles.
 //
 // Each card shows how many days a household's stock lasts, against a target
 // number of days, and keeps the stock in numbered batches by best-before date.
 // The data lives in a Home Assistant to-do list (a Local To-do list works): one
 // item per food or bottle size, with its figures and batches as JSON in the
-// item's description, plus one settings item per card that holds its target.
-// Each card has its own list, though both can share one.
+// item's description, plus one settings item per card that holds its target
+// (and, on the cat card, its cats). Each card has its own list, though they
+// can share one.
 // Everyone who can see the list sees the same stock.
 
 // Changes to one row are written once they stop for this long; the to-do list
@@ -1239,6 +1240,27 @@ const STRINGS = {
     ask_admin: "Ask an admin to add a Local To-do list called “{name}”.",
     save_error: "Couldn't save: {error}",
     create_error: "Couldn't create the list: {error}",
+    cats: "Cats",
+    cat_count: { one: "{n} cat", other: "{n} cats" },
+    meals_a_day: { one: "{n} meal a day", other: "{n} meals a day" },
+    meals: { one: "{n} meal", other: "{n} meals" },
+    meal_amount: "{n} × {amount}",
+    wet: "Wet",
+    dry: "Dry",
+    wet_dry: "Wet & dry",
+    wet_food: "Wet food",
+    dry_food: "Dry food",
+    runs_out_first: "runs out first",
+    nobody_eats: "No cat eats this",
+    food_type: "Type",
+    grams_each: "Grams each",
+    grams_a_meal: "Grams a meal",
+    meals_per_day: "Meals a day",
+    diet: "Diet",
+    add_cat: "Add cat",
+    edit_cat: "Edit {name}",
+    empty_cat_food: "No cat food yet. Add some below.",
+    no_cats: "Add a cat to count days.",
   },
   de: {
     food: "Lebensmittel",
@@ -1276,6 +1298,26 @@ const STRINGS = {
     ask_admin: "Bitte einen Admin, eine Local-To-do-Liste namens „{name}“ anzulegen.",
     save_error: "Speichern fehlgeschlagen: {error}",
     create_error: "Liste konnte nicht angelegt werden: {error}",
+    cats: "Katzen",
+    cat_count: { one: "{n} Katze", other: "{n} Katzen" },
+    meals_a_day: { one: "{n} Mahlzeit pro Tag", other: "{n} Mahlzeiten pro Tag" },
+    meals: { one: "{n} Mahlzeit", other: "{n} Mahlzeiten" },
+    wet: "Nass",
+    dry: "Trocken",
+    wet_dry: "Nass & trocken",
+    wet_food: "Nassfutter",
+    dry_food: "Trockenfutter",
+    runs_out_first: "geht zuerst aus",
+    nobody_eats: "Keine Katze frisst das",
+    food_type: "Art",
+    grams_each: "Gramm pro Stück",
+    grams_a_meal: "Gramm pro Mahlzeit",
+    meals_per_day: "Mahlzeiten pro Tag",
+    diet: "Futter",
+    add_cat: "Katze hinzufügen",
+    edit_cat: "{name} bearbeiten",
+    empty_cat_food: "Noch kein Katzenfutter. Unten hinzufügen.",
+    no_cats: "Füge eine Katze hinzu, um Tage zu zählen.",
   },
   es: {
     food: "Comida",
@@ -1314,6 +1356,26 @@ const STRINGS = {
     ask_admin: "Pide a un administrador que añada una lista de Local To-do llamada «{name}».",
     save_error: "No se pudo guardar: {error}",
     create_error: "No se pudo crear la lista: {error}",
+    cats: "Gatos",
+    cat_count: { one: "{n} gato", other: "{n} gatos" },
+    meals_a_day: { one: "{n} comida al día", other: "{n} comidas al día" },
+    meals: { one: "{n} comida", other: "{n} comidas" },
+    wet: "Húmeda",
+    dry: "Seca",
+    wet_dry: "Húmeda y seca",
+    wet_food: "Comida húmeda",
+    dry_food: "Comida seca",
+    runs_out_first: "se acaba antes",
+    nobody_eats: "Ningún gato la come",
+    food_type: "Tipo",
+    grams_each: "Gramos por unidad",
+    grams_a_meal: "Gramos por comida",
+    meals_per_day: "Comidas al día",
+    diet: "Dieta",
+    add_cat: "Añadir gato",
+    edit_cat: "Editar a {name}",
+    empty_cat_food: "Aún no hay comida para gatos. Añádela abajo.",
+    no_cats: "Añade un gato para contar los días.",
   },
   fr: {
     food: "Nourriture",
@@ -1352,6 +1414,26 @@ const STRINGS = {
     ask_admin: "Demandez à un administrateur d'ajouter une liste Local To-do nommée « {name} ».",
     save_error: "Échec de l'enregistrement : {error}",
     create_error: "Impossible de créer la liste : {error}",
+    cats: "Chats",
+    cat_count: { one: "{n} chat", other: "{n} chats" },
+    meals_a_day: { one: "{n} repas par jour", other: "{n} repas par jour" },
+    meals: { one: "{n} repas", other: "{n} repas" },
+    wet: "Humide",
+    dry: "Sèche",
+    wet_dry: "Humide et sèche",
+    wet_food: "Pâtée",
+    dry_food: "Croquettes",
+    runs_out_first: "s’épuise en premier",
+    nobody_eats: "Aucun chat n’en mange",
+    food_type: "Sorte",
+    grams_each: "Grammes par unité",
+    grams_a_meal: "Grammes par repas",
+    meals_per_day: "Repas par jour",
+    diet: "Régime",
+    add_cat: "Ajouter un chat",
+    edit_cat: "Modifier {name}",
+    empty_cat_food: "Pas encore de nourriture pour chats. Ajoutez-en ci-dessous.",
+    no_cats: "Ajoutez un chat pour compter les jours.",
   },
   it: {
     food: "Cibo",
@@ -1392,6 +1474,26 @@ const STRINGS = {
     ask_admin: "Chiedi a un amministratore di aggiungere una lista Local To-do chiamata “{name}”.",
     save_error: "Impossibile salvare: {error}",
     create_error: "Impossibile creare la lista: {error}",
+    cats: "Gatti",
+    cat_count: { one: "{n} gatto", other: "{n} gatti" },
+    meals_a_day: { one: "{n} pasto al giorno", other: "{n} pasti al giorno" },
+    meals: { one: "{n} pasto", other: "{n} pasti" },
+    wet: "Umido",
+    dry: "Secco",
+    wet_dry: "Umido e secco",
+    wet_food: "Cibo umido",
+    dry_food: "Crocchette",
+    runs_out_first: "finisce prima",
+    nobody_eats: "Nessun gatto lo mangia",
+    food_type: "Tipo",
+    grams_each: "Grammi a confezione",
+    grams_a_meal: "Grammi a pasto",
+    meals_per_day: "Pasti al giorno",
+    diet: "Dieta",
+    add_cat: "Aggiungi gatto",
+    edit_cat: "Modifica {name}",
+    empty_cat_food: "Ancora niente cibo per gatti. Aggiungilo qui sotto.",
+    no_cats: "Aggiungi un gatto per contare i giorni.",
   },
   pt: {
     food: "Comida",
@@ -1430,6 +1532,26 @@ const STRINGS = {
     ask_admin: "Peça a um administrador para adicionar uma lista Local To-do chamada “{name}”.",
     save_error: "Não foi possível guardar: {error}",
     create_error: "Não foi possível criar a lista: {error}",
+    cats: "Gatos",
+    cat_count: { one: "{n} gato", other: "{n} gatos" },
+    meals_a_day: { one: "{n} refeição por dia", other: "{n} refeições por dia" },
+    meals: { one: "{n} refeição", other: "{n} refeições" },
+    wet: "Húmida",
+    dry: "Seca",
+    wet_dry: "Húmida e seca",
+    wet_food: "Comida húmida",
+    dry_food: "Ração seca",
+    runs_out_first: "acaba primeiro",
+    nobody_eats: "Nenhum gato come isto",
+    food_type: "Tipo",
+    grams_each: "Gramas por unidade",
+    grams_a_meal: "Gramas por refeição",
+    meals_per_day: "Refeições por dia",
+    diet: "Dieta",
+    add_cat: "Adicionar gato",
+    edit_cat: "Editar {name}",
+    empty_cat_food: "Ainda não há comida para gatos. Adicione abaixo.",
+    no_cats: "Adicione um gato para contar os dias.",
   },
   "pt-BR": {
     target: "Meta de dias",
@@ -1437,6 +1559,10 @@ const STRINGS = {
     loading: "Carregando…",
     best_before: "Validade",
     save_error: "Não foi possível salvar: {error}",
+    wet: "Úmida",
+    wet_dry: "Úmida e seca",
+    wet_food: "Ração úmida",
+    nobody_eats: "Nenhum gato come isso",
   },
   nl: {
     food: "Voedsel",
@@ -1474,6 +1600,26 @@ const STRINGS = {
     ask_admin: "Vraag een beheerder om een Local To-do-lijst met de naam ‘{name}’ toe te voegen.",
     save_error: "Opslaan mislukt: {error}",
     create_error: "Lijst aanmaken mislukt: {error}",
+    cats: "Katten",
+    cat_count: { one: "{n} kat", other: "{n} katten" },
+    meals_a_day: { one: "{n} maaltijd per dag", other: "{n} maaltijden per dag" },
+    meals: { one: "{n} maaltijd", other: "{n} maaltijden" },
+    wet: "Nat",
+    dry: "Droog",
+    wet_dry: "Nat & droog",
+    wet_food: "Natvoer",
+    dry_food: "Droogvoer",
+    runs_out_first: "raakt eerst op",
+    nobody_eats: "Geen kat eet dit",
+    food_type: "Soort",
+    grams_each: "Gram per stuk",
+    grams_a_meal: "Gram per maaltijd",
+    meals_per_day: "Maaltijden per dag",
+    diet: "Dieet",
+    add_cat: "Kat toevoegen",
+    edit_cat: "{name} bewerken",
+    empty_cat_food: "Nog geen kattenvoer. Voeg hieronder iets toe.",
+    no_cats: "Voeg een kat toe om dagen te tellen.",
   },
   pl: {
     food: "Jedzenie",
@@ -1515,6 +1661,26 @@ const STRINGS = {
     ask_admin: "Poproś administratora o dodanie listy Local To-do o nazwie „{name}”.",
     save_error: "Nie udało się zapisać: {error}",
     create_error: "Nie udało się utworzyć listy: {error}",
+    cats: "Koty",
+    cat_count: { one: "{n} kot", few: "{n} koty", many: "{n} kotów", other: "{n} kota" },
+    meals_a_day: { one: "{n} posiłek dziennie", few: "{n} posiłki dziennie", many: "{n} posiłków dziennie", other: "{n} posiłku dziennie" },
+    meals: { one: "{n} posiłek", few: "{n} posiłki", many: "{n} posiłków", other: "{n} posiłku" },
+    wet: "Mokra",
+    dry: "Sucha",
+    wet_dry: "Mokra i sucha",
+    wet_food: "Karma mokra",
+    dry_food: "Karma sucha",
+    runs_out_first: "skończy się pierwsza",
+    nobody_eats: "Żaden kot tego nie je",
+    food_type: "Rodzaj",
+    grams_each: "Gramy na sztukę",
+    grams_a_meal: "Gramy na posiłek",
+    meals_per_day: "Posiłki dziennie",
+    diet: "Dieta",
+    add_cat: "Dodaj kota",
+    edit_cat: "Edytuj: {name}",
+    empty_cat_food: "Brak karmy dla kotów. Dodaj ją poniżej.",
+    no_cats: "Dodaj kota, aby liczyć dni.",
   },
   sv: {
     food: "Mat",
@@ -1551,6 +1717,26 @@ const STRINGS = {
     ask_admin: "Be en administratör lägga till en Local To-do-lista som heter ”{name}”.",
     save_error: "Kunde inte spara: {error}",
     create_error: "Kunde inte skapa listan: {error}",
+    cats: "Katter",
+    cat_count: { one: "{n} katt", other: "{n} katter" },
+    meals_a_day: { one: "{n} måltid per dag", other: "{n} måltider per dag" },
+    meals: { one: "{n} måltid", other: "{n} måltider" },
+    wet: "Våt",
+    dry: "Torr",
+    wet_dry: "Våt & torr",
+    wet_food: "Våtfoder",
+    dry_food: "Torrfoder",
+    runs_out_first: "tar slut först",
+    nobody_eats: "Ingen katt äter detta",
+    food_type: "Typ",
+    grams_each: "Gram per styck",
+    grams_a_meal: "Gram per måltid",
+    meals_per_day: "Måltider per dag",
+    diet: "Kost",
+    add_cat: "Lägg till katt",
+    edit_cat: "Redigera {name}",
+    empty_cat_food: "Inget kattfoder än. Lägg till nedan.",
+    no_cats: "Lägg till en katt för att räkna dagar.",
   },
   "zh-Hans": {
     food: "食物",
@@ -1590,6 +1776,26 @@ const STRINGS = {
     ask_admin: "请管理员添加名为“{name}”的 Local To-do 列表。",
     save_error: "保存失败：{error}",
     create_error: "无法创建列表：{error}",
+    cats: "猫",
+    cat_count: { other: "{n} 只猫" },
+    meals_a_day: { other: "每天 {n} 餐" },
+    meals: { other: "{n} 餐" },
+    wet: "湿粮",
+    dry: "干粮",
+    wet_dry: "湿粮和干粮",
+    wet_food: "湿粮",
+    dry_food: "干粮",
+    runs_out_first: "最先吃完",
+    nobody_eats: "没有猫吃这个",
+    food_type: "类型",
+    grams_each: "每份克数",
+    grams_a_meal: "每餐克数",
+    meals_per_day: "每天餐数",
+    diet: "饮食",
+    add_cat: "添加猫",
+    edit_cat: "编辑 {name}",
+    empty_cat_food: "还没有猫粮。请在下方添加。",
+    no_cats: "添加一只猫以计算天数。",
   },
 };
 
@@ -1640,6 +1846,8 @@ const fmtNumber = (v, locale = DEFAULT_LOCALE, digits = 0) =>
   v.toLocaleString(locale, { maximumFractionDigits: digits, useGrouping: "always" });
 const fmtKcal = (k, locale) => fmtNumber(Math.round(k), locale) + " kcal";
 const fmtLitres = (l, locale) => fmtNumber(Math.round(l * 10) / 10, locale, 1) + " L";
+const fmtGrams = (g, locale) =>
+  g >= 1000 ? fmtNumber(Math.round(g / 100) / 10, locale, 1) + " kg" : fmtNumber(Math.round(g), locale) + " g";
 // Rounded down, so the card never promises a day that isn't there.
 const fmtDays = (d, locale) => (d >= 10 ? fmtNumber(Math.floor(d), locale) : fmtNumber(Math.floor(d * 10) / 10, locale, 1));
 
@@ -1692,8 +1900,9 @@ const listName = (entity) => {
 
 // What makes each card different. `fields` are the figures an item stores
 // besides its batches, in the order the add/edit form asks for them; an item
-// belongs to the card when its description has every one of them. Text is
-// named by its STRINGS key.
+// belongs to the card when its description has every one of them. A field
+// with `choices` holds one of them rather than a number. Text is named by its
+// STRINGS key.
 const KINDS = {
   food: {
     tag: "food-stockpile-card",
@@ -1733,7 +1942,31 @@ const KINDS = {
     add: "add_bottles",
     empty: "empty_water",
   },
+  cat: {
+    tag: "cat-stockpile-card",
+    name: "Cat stockpile",
+    description: "Days of wet and dry cat food in stock against a target, counted from a to-do list",
+    title: "cats",
+    entity: "todo.cat_stockpile",
+    settings: "Cat stockpile settings",
+    defaultTarget: 30,
+    fmt: fmtGrams,
+    fields: [
+      { key: "type", label: "food_type", choices: ["wet", "dry"] },
+      { key: "grams", label: "grams_each", min: 1 },
+    ],
+    each: (f) => f.grams,
+    add: "add_food",
+    empty: "empty_cat_food",
+    // Who eats is the list of cats in the settings item, not men and women.
+    cats: true,
+  },
 };
+
+// The food types a cat eats, each counted on its own.
+const TYPES = ["wet", "dry"];
+
+const readField = (f, v) => (f.choices ? (f.choices.includes(v) ? v : f.choices[0]) : num(v));
 
 // An item's batches. An item with only a count, as written before batches,
 // is one undated batch.
@@ -1761,10 +1994,12 @@ const readItems = (kind, items) => {
     const v = parse(it.description);
     if (!v) continue;
     if (it.summary === kind.settings && "target_days" in v) {
-      settings = { uid: it.uid, target_days: num(v.target_days, 1) };
+      // `raw` keeps keys this version doesn't know, so a write doesn't drop them.
+      settings = { uid: it.uid, raw: v, target_days: num(v.target_days, 1) };
+      if (kind.cats) settings.cats = readCats(v.cats);
     } else if (kind.fields.every((f) => f.key in v)) {
       const row = { uid: it.uid, name: it.summary, batches: readBatches(v) };
-      for (const f of kind.fields) row[f.key] = num(v[f.key]);
+      for (const f of kind.fields) row[f.key] = readField(f, v[f.key]);
       rows.push(row);
     }
   }
@@ -1777,6 +2012,45 @@ const household = (kind, config, t = STRINGS.en, locale = DEFAULT_LOCALE) => {
   const women = Math.floor(num(config.women ?? 1));
   const people = [men && plural(t.men, men, locale), women && plural(t.women, women, locale)].filter(Boolean).join(" · ");
   return { men, women, people, perDay: men * kind.perMan + women * kind.perWoman };
+};
+
+// A cat's meals of one type, `{ meals, g }` (grams a meal), or null when it
+// doesn't eat that type.
+const readMeal = (m) => (m && num(m.meals) >= 1 && num(m.g) > 0 ? { meals: Math.floor(num(m.meals)), g: num(m.g) } : null);
+
+// The cats in the cat card's settings item. A cat with no name, or that eats
+// neither type, is skipped.
+const readCats = (v) =>
+  (Array.isArray(v) ? v : [])
+    .filter((c) => c && typeof c.name === "string" && c.name.trim())
+    .map((c) => ({ name: c.name.trim(), wet: readMeal(c.wet), dry: readMeal(c.dry) }))
+    .filter((c) => c.wet || c.dry);
+
+const catJSON = (c) => ({ name: c.name, ...(c.wet && { wet: c.wet }), ...(c.dry && { dry: c.dry }) });
+
+// What the cats eat a day of each type: grams, meals, and which cats.
+const catNeeds = (cats) =>
+  Object.fromEntries(
+    TYPES.map((type) => {
+      const eaters = cats.filter((c) => c[type]);
+      return [
+        type,
+        {
+          perDay: eaters.reduce((sum, c) => sum + c[type].meals * c[type].g, 0),
+          meals: eaters.reduce((sum, c) => sum + c[type].meals, 0),
+          names: eaters.map((c) => c.name),
+        },
+      ];
+    }),
+  );
+
+// Days the cats' stock lasts. Each type eaten lasts on its own; the stock
+// lasts until the first of them runs out, `first`.
+const catDays = (need, stock) => {
+  const eaten = TYPES.filter((type) => need[type].perDay > 0);
+  const days = Object.fromEntries(eaten.map((type) => [type, stock[type] / need[type].perDay]));
+  const first = eaten.length ? eaten.reduce((a, b) => (days[a] <= days[b] ? a : b)) : null;
+  return { eaten, days, first, overall: first ? days[first] : 0 };
 };
 
 const itemJSON = (kind, row) => {
@@ -1866,6 +2140,26 @@ const STYLE = `
   input { font: inherit; color: var(--primary-text-color); background: var(--secondary-background-color, transparent); border: 1px solid var(--divider-color); border-radius: 8px; height: 36px; padding: 0 8px; width: 100%; box-sizing: border-box; }
   .actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
   @container (max-width: 360px) { form { grid-template-columns: 1fr 1fr; } .field-name { grid-column: 1 / -1; } }
+  select { font: inherit; color: var(--primary-text-color); background: var(--secondary-background-color, transparent); border: 1px solid var(--divider-color); border-radius: 8px; height: 36px; padding: 0 6px; width: 100%; }
+  select:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 1px; }
+  .amount.first { color: var(--warning-color, #ffb86c); }
+  .bars { display: grid; gap: 8px; margin-top: 12px; }
+  .barrow { display: grid; grid-template-columns: minmax(3em, auto) 1fr; align-items: center; gap: 8px; font-size: 12px; color: var(--secondary-text-color); }
+  .barrow .bar { margin-top: 0; height: 10px; }
+  li.section { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; padding-top: 12px; font-size: 13px; color: var(--secondary-text-color); }
+  li.section b { font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+  .cats { display: grid; gap: 4px; }
+  .cat-foot[hidden] { display: none; }
+  .cats[hidden] { display: none; }
+  .cats .head { align-items: baseline; flex-wrap: wrap; font-size: 13px; color: var(--secondary-text-color); padding-top: 12px; border-top: 1px solid var(--divider-color); }
+  .cats .head b { font-weight: 500; letter-spacing: .06em; text-transform: uppercase; }
+  .catlist .sub { padding-left: 0; }
+  .catlist .count { grid-row: 1 / span 2; }
+  .diet { font-size: 11px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; padding: 0 6px; border-radius: 4px; background: var(--secondary-background-color, rgba(127, 127, 127, .15)); color: var(--secondary-text-color); }
+  .catform { grid-template-columns: 2fr 1fr; }
+  fieldset { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 0; padding: 8px 0 0; border: 0; border-top: 1px solid var(--divider-color); }
+  fieldset[hidden] { display: none; }
+  legend { font-size: 13px; font-weight: 500; padding: 0 6px 0 0; }
 `;
 
 // The visual editor's fields. Labels are in English, as Home Assistant gives
@@ -1874,14 +2168,19 @@ const editorForm = (kind) => ({
   schema: [
     { name: "entity", required: true, selector: { entity: { domain: "todo" } } },
     { name: "title", selector: { text: {} } },
-    {
-      type: "grid",
-      name: "",
-      schema: [
-        { name: "men", selector: { number: { min: 0, max: 20, step: 1, mode: "box" } } },
-        { name: "women", selector: { number: { min: 0, max: 20, step: 1, mode: "box" } } },
-      ],
-    },
+    // The cat card's cats are set on the card itself.
+    ...(kind.cats
+      ? []
+      : [
+          {
+            type: "grid",
+            name: "",
+            schema: [
+              { name: "men", selector: { number: { min: 0, max: 20, step: 1, mode: "box" } } },
+              { name: "women", selector: { number: { min: 0, max: 20, step: 1, mode: "box" } } },
+            ],
+          },
+        ]),
     { name: "locale", selector: { text: {} } },
   ],
   computeLabel: (s) =>
@@ -1894,6 +2193,21 @@ const editorForm = (kind) => ({
     })[s.name],
 });
 
+// The −, target and + controls.
+const targetHTML = (t, target, locale) => `<div class="target" role="group" aria-label="${esc(t.target)}">
+          <button type="button" data-target="-1" aria-label="${esc(t.day_less)}" ${target <= 1 ? "disabled" : ""}>−</button>
+          <output>${fmtNumber(target, locale)}</output>
+          <button type="button" data-target="1" aria-label="${esc(t.day_more)}">+</button>
+        </div>`;
+
+// A bar's segments, one per row with stock. They fill the bar up to the
+// target, `scale`; past it, they share the bar in proportion.
+const segments = (rows, scale) =>
+  rows
+    .filter((x) => x.amount > 0)
+    .map((x) => `<span style="width:${(100 * x.amount) / scale}%;background:${x.color}" title="${esc(x.r.name)}"></span>`)
+    .join("");
+
 class StockpileCard extends HTMLElement {
   // Set by each card's subclass to one of KINDS.
   static kind;
@@ -1903,7 +2217,7 @@ class StockpileCard extends HTMLElement {
   }
 
   static getStubConfig() {
-    return { entity: this.kind.entity, men: 1, women: 1 };
+    return this.kind.cats ? { entity: this.kind.entity } : { entity: this.kind.entity, men: 1, women: 1 };
   }
 
   constructor() {
@@ -1920,6 +2234,8 @@ class StockpileCard extends HTMLElement {
     this._local = new Map();
     this._timers = new Map();
     this._editing = null;
+    // The cat being edited on the cat card: its index, "new", or null.
+    this._catEditing = null;
   }
 
   setConfig(config) {
@@ -2031,7 +2347,12 @@ class StockpileCard extends HTMLElement {
   }
 
   _target() {
-    return this._local.get("target") ?? this._settings?.target_days ?? this._kind.defaultTarget;
+    return this._local.get("settings")?.target_days ?? this._settings?.target_days ?? this._kind.defaultTarget;
+  }
+
+  _cats() {
+    const local = this._local.get("settings");
+    return local ? readCats(local.cats) : (this._settings?.cats ?? []);
   }
 
   _batches(r) {
@@ -2057,13 +2378,21 @@ class StockpileCard extends HTMLElement {
     this._update();
   }
 
-  _setTarget(days) {
-    this._queue("target", Math.max(1, days), (v) => {
-      const description = JSON.stringify({ target_days: v });
+  // Writes the settings item with `patch` applied. The target and the cats
+  // share one item, and so one queue, so a change to one can't overwrite a
+  // pending change to the other or add the item twice.
+  _setSettings(patch) {
+    const base = this._local.get("settings") ?? { ...this._settings?.raw, ...(this._kind.cats && { cats: this._cats().map(catJSON) }) };
+    this._queue("settings", { ...base, target_days: this._target(), ...patch }, (v) => {
+      const description = JSON.stringify(v);
       return this._settings
         ? this._service("update_item", { item: this._settings.uid, description })
         : this._service("add_item", { item: this._kind.settings, description });
     });
+  }
+
+  _setTarget(days) {
+    this._setSettings({ target_days: Math.max(1, days) });
   }
 
   _setBatches(r, batches) {
@@ -2084,11 +2413,34 @@ class StockpileCard extends HTMLElement {
       <style>${STYLE}</style>
       <ha-card>
         <div class="summary"></div>
+        ${kind.cats ? `<div class="cats"><div class="head"><b data-t="cats"></b><span class="catsum"></span></div><ul class="catlist"></ul>
+        <div class="cat-foot"><button type="button" class="add-cat" data-t="add_cat"></button></div>
+        <form class="catform" hidden>
+          <label><span data-t="name"></span><input name="cat_name" required maxlength="40" autocomplete="off"></label>
+          <label><span data-t="diet"></span><select name="diet"><option value="wet" data-t="wet"></option><option value="dry" data-t="dry"></option><option value="both" data-t="wet_dry"></option></select></label>
+          ${TYPES.map(
+            (type) => `<fieldset data-type="${type}"><legend data-t="${type}"></legend>
+            <label><span data-t="meals_per_day"></span><input name="${type}_meals" type="number" min="1" max="20" step="1" required></label>
+            <label><span data-t="grams_a_meal"></span><input name="${type}_g" type="number" min="1" step="any" required></label>
+          </fieldset>`,
+          ).join("")}
+          <div class="actions">
+            <button type="submit" class="primary cat-save" data-t="add"></button>
+            <button type="button" class="cat-cancel" data-t="cancel"></button>
+            <button type="button" class="danger cat-remove" data-t="remove" hidden></button>
+          </div>
+        </form></div>` : ""}
         <ul class="list"></ul>
         <div class="foot"><button type="button" class="add" data-t="${kind.add}"></button></div>
         <form hidden style="--fields: ${kind.fields.length}">
           <label class="field-name"><span data-t="name"></span><input name="item_name" required maxlength="80" autocomplete="off"></label>
-          ${kind.fields.map((f) => `<label><span data-t="${f.label}"></span><input name="${f.key}" type="number" min="${f.min}" step="any" required></label>`).join("")}
+          ${kind.fields
+            .map((f) =>
+              f.choices
+                ? `<label><span data-t="${f.label}"></span><select name="${f.key}">${f.choices.map((c) => `<option value="${c}" data-t="${c}"></option>`).join("")}</select></label>`
+                : `<label><span data-t="${f.label}"></span><input name="${f.key}" type="number" min="${f.min}" step="any" required></label>`,
+            )
+            .join("")}
           <div class="actions">
             <button type="submit" class="primary save" data-t="add"></button>
             <button type="button" class="cancel" data-t="cancel"></button>
@@ -2097,7 +2449,7 @@ class StockpileCard extends HTMLElement {
         </form>
       </ha-card>`;
     const root = this.shadowRoot;
-    this._form = root.querySelector("form");
+    this._form = root.querySelector("form:not(.catform)");
     root.querySelector(".add").addEventListener("click", () => this._openForm("new"));
     root.querySelector(".cancel").addEventListener("click", () => this._closeForm());
     root.querySelector(".remove").addEventListener("click", () => {
@@ -2113,7 +2465,7 @@ class StockpileCard extends HTMLElement {
       const name = String(fd.get("item_name")).trim();
       if (!name) return;
       const fields = {};
-      for (const f of kind.fields) fields[f.key] = num(fd.get(f.key));
+      for (const f of kind.fields) fields[f.key] = readField(f, fd.get(f.key));
       const old = this._rows.find((r) => r.uid === this._editing);
       if (old) {
         const data = { item: old.uid, description: itemJSON(kind, { ...fields, batches: this._batches(old) }) };
@@ -2124,6 +2476,7 @@ class StockpileCard extends HTMLElement {
       }
       this._closeForm();
     });
+    if (kind.cats) this._buildCats();
     // One listener for every row's buttons, since rows are rebuilt on each update.
     root.querySelector(".summary").addEventListener("click", (e) => {
       if (e.target.closest("button.create")) return this._createList();
@@ -2178,6 +2531,7 @@ class StockpileCard extends HTMLElement {
   }
 
   _openForm(uid) {
+    if (this._catEditing !== null) this._closeCat();
     const r = this._rows.find((x) => x.uid === uid);
     this._editing = uid;
     this._form.reset();
@@ -2198,92 +2552,178 @@ class StockpileCard extends HTMLElement {
     this._update();
   }
 
-  _update() {
-    if (!this._built) return;
-    const kind = this._kind;
+  _buildCats() {
     const root = this.shadowRoot;
-    const summary = root.querySelector(".summary");
+    const form = root.querySelector(".catform");
+    const diet = root.querySelector(".catform select");
+    // A hidden fieldset is also disabled, so its required inputs don't block saving.
+    this._showMeals = () => {
+      for (const type of TYPES) {
+        const set = root.querySelector(`fieldset[data-type="${type}"]`);
+        set.hidden = set.disabled = !(diet.value === type || diet.value === "both");
+      }
+    };
+    diet.addEventListener("change", this._showMeals);
+    root.querySelector(".add-cat").addEventListener("click", () => this._openCat("new"));
+    root.querySelector(".cat-cancel").addEventListener("click", () => this._closeCat());
+    root.querySelector(".cat-remove").addEventListener("click", () => {
+      const i = this._catEditing;
+      this._closeCat();
+      this._setSettings({ cats: this._cats().filter((_, j) => j !== i).map(catJSON) });
+    });
+    root.querySelector(".catlist").addEventListener("click", (e) => {
+      const b = e.target.closest("button.edit");
+      if (b) this._openCat(Number(b.closest("li").dataset.cat));
+    });
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const meal = (type) => (fd.has(`${type}_meals`) ? { meals: fd.get(`${type}_meals`), g: fd.get(`${type}_g`) } : null);
+      const [cat] = readCats([{ name: String(fd.get("cat_name")), wet: meal("wet"), dry: meal("dry") }]);
+      if (!cat) return;
+      const cats = [...this._cats()];
+      if (this._catEditing === "new") cats.push(cat);
+      else cats[this._catEditing] = cat;
+      this._closeCat();
+      this._setSettings({ cats: cats.map(catJSON) });
+    });
+  }
+
+  // Opens the cat form on cat `i` of _cats(), or on a new cat for "new".
+  _openCat(i) {
+    if (this._editing) this._closeForm();
+    const root = this.shadowRoot;
+    const c = i === "new" ? null : this._cats()[i];
+    const field = (name) => root.querySelector(`.catform [name="${name}"]`);
+    this._catEditing = i;
+    root.querySelector(".catform").reset();
+    field("cat_name").value = c?.name ?? "";
+    field("diet").value = !c || (c.wet && c.dry) ? "both" : c.wet ? "wet" : "dry";
+    for (const type of TYPES) {
+      field(`${type}_meals`).value = c?.[type]?.meals ?? "";
+      field(`${type}_g`).value = c?.[type]?.g ?? "";
+    }
+    this._showMeals();
+    root.querySelector(".cat-save").dataset.t = c ? "save" : "add";
+    root.querySelector(".cat-remove").hidden = !c;
+    root.querySelector(".catform").hidden = false;
+    this._update();
+    field("cat_name").focus();
+  }
+
+  _closeCat() {
+    this._catEditing = null;
+    this.shadowRoot.querySelector(".catform").hidden = true;
+    this._update();
+  }
+
+  // The cat card's summary, cats and rows. Wet and dry food each last a number
+  // of days; the card counts the days until the first runs out.
+  _updateCats(t, locale, title) {
+    const root = this.shadowRoot;
+    const kind = this._kind;
     const list = root.querySelector(".list");
-    const locale = this._locale();
-    const t = this._strings();
-    root.querySelector("ha-card").setAttribute("lang", locale);
-    for (const el of root.querySelectorAll("[data-t]")) el.textContent = t[el.dataset.t];
-    const title = this._config.title ?? t[kind.title];
-    if (this._hass && !this._exists()) {
-      const name = listName(this._config.entity);
-      summary.innerHTML = `
-        <div class="title">${esc(title)}</div>
-        <p class="empty">${esc(fill(t.missing, { entity: this._config.entity }))}</p>
-        ${
-          this._hass.user?.is_admin
-            ? `<button type="button" class="primary create" ${this._creating ? "disabled" : ""}>${esc(fill(t.create, { name }))}</button>`
-            : `<p class="empty">${esc(fill(t.ask_admin, { name }))}</p>`
-        }
-        ${this._error ? `<div class="error">${esc(this._error)}</div>` : ""}`;
-      list.innerHTML = "";
-      root.querySelector(".foot").hidden = true;
-      return;
-    }
-    root.querySelector(".foot").hidden = Boolean(this._editing);
-    if (this._error && !this._loaded) {
-      summary.innerHTML = `<div class="error">${esc(this._error)}</div>`;
-      list.innerHTML = "";
-      return;
-    }
-    if (!this._loaded) {
-      summary.innerHTML = `<div class="empty">${esc(t.loading)}</div>`;
-      return;
-    }
-    const { people, perDay } = household(kind, this._config, t, locale);
-    if (!perDay) {
-      summary.innerHTML = `<div class="error">${esc(t.nobody)}</div>`;
-      list.innerHTML = "";
-      return;
-    }
     const fmt = (v) => kind.fmt(v, locale);
+    const days = (d) => esc(fill(t.days_short, { n: fmtDays(d, locale) }));
     const target = this._target();
-    const goal = target * perDay;
+    const cats = this._cats();
+    const need = catNeeds(cats);
     const rows = this._rows.map((r, i) => {
       const batches = this._batches(r);
       const n = totalCount(batches);
       return { r, n, batches, amount: n * kind.each(r), color: PALETTE[i % PALETTE.length] };
     });
+    const stock = Object.fromEntries(TYPES.map((type) => [type, rows.filter((x) => x.r.type === type).reduce((sum, x) => sum + x.amount, 0)]));
+    const { eaten, days: left, first, overall } = catDays(need, stock);
     const now = new Date();
-    const total = rows.reduce((sum, x) => sum + x.amount, 0);
-    const days = total / perDay;
-    // Segments fill the bar up to the target; past it, they share the bar in proportion.
-    const scale = Math.max(goal, total) || 1;
     const focused = root.activeElement;
     const targetFocus = focused?.dataset?.target;
-    summary.innerHTML = `
+
+    const line = (type) => {
+      const marked = type === first && eaten.length > 1;
+      const parts = [esc(t[type]), days(left[type]), `${fmt(stock[type])} / ${fmt(target * need[type].perDay)}`];
+      if (marked) parts.push(esc(t.runs_out_first));
+      return `<div class="amount${marked ? " first" : ""}">${parts.join(" · ")}</div>`;
+    };
+    const bar = (type) => {
+      const goal = target * need[type].perDay;
+      const own = rows.filter((x) => x.r.type === type);
+      return `<div class="barrow"><span>${esc(t[type])}</span><div class="bar" role="img" aria-label="${esc(t[type])}: ${fmt(stock[type])} / ${fmt(goal)}">${segments(own, Math.max(goal, stock[type]) || 1)}</div></div>`;
+    };
+    root.querySelector(".summary").innerHTML = `
       <div class="head">
         <div>
           <div class="title">${esc(title)}</div>
-          <div class="days ${days < target ? "low" : "met"}">${fmtDays(days, locale)}<small>${esc(plural(t.of_days, target, locale))}</small></div>
-          <div class="amount">${fmt(total)} / ${fmt(goal)}</div>
-          <div class="amount">${esc(people)} · ${esc(fill(t.per_day, { amount: fmt(perDay) }))}</div>
+          ${
+            first
+              ? `<div class="days ${overall < target ? "low" : "met"}">${fmtDays(overall, locale)}<small>${esc(plural(t.of_days, target, locale))}</small></div>
+          ${eaten.map(line).join("")}
+          <div class="amount">${esc(plural(t.cat_count, cats.length, locale))} · ${esc(plural(t.meals_a_day, need.wet.meals + need.dry.meals, locale))}</div>`
+              : `<p class="empty">${esc(t.no_cats)}</p>`
+          }
         </div>
-        <div class="target" role="group" aria-label="${esc(t.target)}">
-          <button type="button" data-target="-1" aria-label="${esc(t.day_less)}" ${target <= 1 ? "disabled" : ""}>−</button>
-          <output>${fmtNumber(target, locale)}</output>
-          <button type="button" data-target="1" aria-label="${esc(t.day_more)}">+</button>
-        </div>
+        ${targetHTML(t, target, locale)}
       </div>
-      <div class="bar" role="img" aria-label="${fmt(total)} / ${fmt(goal)}">
-        ${rows.filter((x) => x.amount > 0).map((x) => `<span style="width:${(100 * x.amount) / scale}%;background:${x.color}" title="${esc(x.r.name)}"></span>`).join("")}
-      </div>
+      ${eaten.length ? `<div class="bars">${eaten.map(bar).join("")}</div>` : ""}
       ${this._error ? `<div class="error">${esc(this._error)}</div>` : ""}`;
-    if (targetFocus) summary.querySelector(`button[data-target="${targetFocus}"]`)?.focus();
+    if (targetFocus) root.querySelector(`.summary button[data-target="${targetFocus}"]`)?.focus();
+
+    root.querySelector(".catsum").textContent = eaten.length
+      ? fill(t.per_day, { amount: eaten.map((type) => `${t[type]} ${fmt(need[type].perDay)}`).join(" · ") })
+      : "";
+    root.querySelector(".catlist").innerHTML = cats
+      .map((c, i) => {
+        const diet = c.wet && c.dry ? "wet_dry" : c.wet ? "wet" : "dry";
+        const meals = TYPES.filter((type) => c[type])
+          .map((type) => `${t[type]} ${fill(t.meal_amount, { n: fmtNumber(c[type].meals, locale), amount: fmt(c[type].g) })}`)
+          .join(" · ");
+        return `<li data-cat="${i}">
+        <div class="name"><span>${esc(c.name)}</span><span class="diet">${esc(t[diet])}</span></div>
+        <div class="sub">${esc(meals)}</div>
+        <div class="count"><button type="button" class="edit" aria-label="${esc(fill(t.edit_cat, { name: c.name }))}"><ha-icon icon="mdi:pencil"></ha-icon></button></div>
+      </li>`;
+      })
+      .join("");
+
     const refocus = focused?.classList?.contains("edit") && focused.closest("li").dataset.uid;
-    const editing = this._batchEdit;
+    // A type no cat eats still lists its stock, so none of it is hidden.
+    const shown = TYPES.filter((type) => need[type].perDay > 0 || rows.some((x) => x.r.type === type));
     list.innerHTML = rows.length
-      ? rows
-          .map(
-            ({ r, n, batches, amount, color }) => `
+      ? shown
+          .map((type) => {
+            const { perDay, meals, names } = need[type];
+            // The average meal of this type, to show how many meals a row holds.
+            const meal = meals ? perDay / meals : 0;
+            const head = `<li class="section"><b>${esc(t[`${type}_food`])}</b><span>${
+              perDay ? `${esc(fill(t.per_day, { amount: fmt(perDay) }))} · ${esc(names.join(", "))}` : esc(t.nobody_eats)
+            }</span></li>`;
+            return (
+              head +
+              rows
+                .filter((x) => x.r.type === type)
+                .map((x) => {
+                  const each = fill(t.each, { amount: fmt(x.r.grams) });
+                  const sub = meal ? `${each} · ${plural(t.meals, Math.floor(x.amount / meal), locale)}` : each;
+                  return this._row(x, perDay, sub, t, locale, now);
+                })
+                .join("")
+            );
+          })
+          .join("")
+      : `<li class="empty">${esc(t[kind.empty])}</li>`;
+    if (refocus) [...list.children].find((x) => x.dataset.uid === refocus)?.querySelector("button.edit")?.focus();
+  }
+
+  // One stock row: its total, days at `perDay` (none when 0), `sub` under
+  // its name, its count and its batches.
+  _row({ r, n, batches, amount, color }, perDay, sub, t, locale, now) {
+    const fmt = (v) => this._kind.fmt(v, locale);
+    const editing = this._batchEdit;
+    return `
       <li data-uid="${esc(r.uid)}">
         <div class="name"><span class="dot" style="background:${color}"></span><span>${esc(r.name)}</span></div>
-        <div class="total">${fmt(amount)} · ${esc(fill(t.days_short, { n: fmtDays(amount / perDay, locale) }))}</div>
-        <div class="sub">${esc(fill(t.each, { amount: fmt(kind.each(r)) }))}</div>
+        <div class="total">${fmt(amount)}${perDay ? ` · ${esc(fill(t.days_short, { n: fmtDays(amount / perDay, locale) }))}` : ""}</div>
+        <div class="sub">${esc(sub)}</div>
         <div class="count">
           <button type="button" class="edit" aria-label="${esc(fill(t.edit, { name: r.name }))}"><ha-icon icon="mdi:pencil"></ha-icon></button>
           <output>${fmtNumber(n, locale)}</output>
@@ -2313,9 +2753,88 @@ class StockpileCard extends HTMLElement {
         </div>`
             : ""
         }
-      </li>`,
-          )
-          .join("")
+      </li>`;
+  }
+
+  _update() {
+    if (!this._built) return;
+    const kind = this._kind;
+    const root = this.shadowRoot;
+    const summary = root.querySelector(".summary");
+    const list = root.querySelector(".list");
+    const locale = this._locale();
+    const t = this._strings();
+    root.querySelector("ha-card").setAttribute("lang", locale);
+    for (const el of root.querySelectorAll("[data-t]")) el.textContent = t[el.dataset.t];
+    const title = this._config.title ?? t[kind.title];
+    if (this._hass && !this._exists()) {
+      const name = listName(this._config.entity);
+      summary.innerHTML = `
+        <div class="title">${esc(title)}</div>
+        <p class="empty">${esc(fill(t.missing, { entity: this._config.entity }))}</p>
+        ${
+          this._hass.user?.is_admin
+            ? `<button type="button" class="primary create" ${this._creating ? "disabled" : ""}>${esc(fill(t.create, { name }))}</button>`
+            : `<p class="empty">${esc(fill(t.ask_admin, { name }))}</p>`
+        }
+        ${this._error ? `<div class="error">${esc(this._error)}</div>` : ""}`;
+      list.innerHTML = "";
+      root.querySelector(".foot").hidden = true;
+      if (root.querySelector(".cats")) root.querySelector(".cats").hidden = true;
+      return;
+    }
+    root.querySelector(".foot").hidden = Boolean(this._editing) || this._catEditing !== null;
+    const cats = root.querySelector(".cats");
+    if (cats) {
+      cats.hidden = false;
+      root.querySelector(".cat-foot").hidden = Boolean(this._editing) || this._catEditing !== null;
+    }
+    if (this._error && !this._loaded) {
+      summary.innerHTML = `<div class="error">${esc(this._error)}</div>`;
+      list.innerHTML = "";
+      return;
+    }
+    if (!this._loaded) {
+      summary.innerHTML = `<div class="empty">${esc(t.loading)}</div>`;
+      return;
+    }
+    if (kind.cats) return this._updateCats(t, locale, title);
+    const { people, perDay } = household(kind, this._config, t, locale);
+    if (!perDay) {
+      summary.innerHTML = `<div class="error">${esc(t.nobody)}</div>`;
+      list.innerHTML = "";
+      return;
+    }
+    const fmt = (v) => kind.fmt(v, locale);
+    const target = this._target();
+    const goal = target * perDay;
+    const rows = this._rows.map((r, i) => {
+      const batches = this._batches(r);
+      const n = totalCount(batches);
+      return { r, n, batches, amount: n * kind.each(r), color: PALETTE[i % PALETTE.length] };
+    });
+    const now = new Date();
+    const total = rows.reduce((sum, x) => sum + x.amount, 0);
+    const days = total / perDay;
+    const scale = Math.max(goal, total) || 1;
+    const focused = root.activeElement;
+    const targetFocus = focused?.dataset?.target;
+    summary.innerHTML = `
+      <div class="head">
+        <div>
+          <div class="title">${esc(title)}</div>
+          <div class="days ${days < target ? "low" : "met"}">${fmtDays(days, locale)}<small>${esc(plural(t.of_days, target, locale))}</small></div>
+          <div class="amount">${fmt(total)} / ${fmt(goal)}</div>
+          <div class="amount">${esc(people)} · ${esc(fill(t.per_day, { amount: fmt(perDay) }))}</div>
+        </div>
+        ${targetHTML(t, target, locale)}
+      </div>
+      <div class="bar" role="img" aria-label="${fmt(total)} / ${fmt(goal)}">${segments(rows, scale)}</div>
+      ${this._error ? `<div class="error">${esc(this._error)}</div>` : ""}`;
+    if (targetFocus) summary.querySelector(`button[data-target="${targetFocus}"]`)?.focus();
+    const refocus = focused?.classList?.contains("edit") && focused.closest("li").dataset.uid;
+    list.innerHTML = rows.length
+      ? rows.map((x) => this._row(x, perDay, fill(t.each, { amount: fmt(kind.each(x.r)) }), t, locale, now)).join("")
       : `<li class="empty">${esc(t[kind.empty])}</li>`;
     // Rows are rebuilt on each update, so put keyboard focus back on the button that was pressed.
     if (refocus) [...list.children].find((x) => x.dataset.uid === refocus)?.querySelector("button.edit")?.focus();

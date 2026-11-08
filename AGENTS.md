@@ -25,8 +25,8 @@ CI runs the HACS validator, the build check and the tests.
 
 - **Shared scope.** Scripts in `src/` reuse top-level names such as `esc`, `STRINGS` and `translate`. The bundle wraps each script in its own block, and loads as a module, so it is strict code. Never rely on a name from another script. Never declare a global with `var` or `window.x`, except `window.customCards`.
 - **New card.** Add its file to `SOURCES` in `scripts/build.js`, and its element names to `test/zp-cards.bundle.test.js`. Register it in `window.customCards` with `documentationURL` set to its README anchor. Write a section for it in `README.md`.
-- **Element names.** Keep existing ones (`budget-sankey-card`, `food-stockpile-card`, `water-stockpile-card`, `meds-streak-card`). Users' dashboards reference them.
-- **Stored data.** Keep the stockpile cards' JSON in to-do item descriptions backward compatible.
+- **Element names.** Keep existing ones (`budget-sankey-card`, `food-stockpile-card`, `water-stockpile-card`, `cat-stockpile-card`, `meds-streak-card`). Users' dashboards reference them.
+- **Stored data.** Keep the stockpile cards' JSON in to-do item descriptions backward compatible. Settings writes keep keys they don't change, so the target and the cat card's cats never overwrite each other.
 - **Languages.** Every card has a `STRINGS` table in the same 11 languages: en, de, es, fr, it, nl, pl, pt, pt-BR, sv and zh-Hans. Add a new key to `en` first, then to each language. The i18n tests check keys, placeholders and plural categories. Visual editor labels stay in English.
 - **Config errors.** Validate config in `setConfig`, and throw an `Error` whose message tells the user what to fix.
 - **Theming.** Take colours and fonts from Home Assistant theme variables (`--primary-color`, `--green-color`, `--secondary-text-color`, `--ha-font-family-code`, ...), so cards follow any theme. The meds card has no hard-coded colours, and a test enforces this.
